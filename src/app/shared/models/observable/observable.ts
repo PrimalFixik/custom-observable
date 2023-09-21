@@ -5,9 +5,11 @@ import { Subscription } from "./subscription";
 export class Observable<T> {
   constructor(private wrappedFunction: (subscriber: Observer<T>) => () => void) {}
 
-  subscribe(observer: Observer<T>) {
+  subscribe(observerOrNext: Observer<T> | ((value: T) => void)) {
     const subscription = new Subscription();
-    const subscriber = new SafeSubscriber(observer, subscription);
+    const subscriber = typeof observerOrNext === 'function'
+      ? new SafeSubscriber({ next: observerOrNext }, subscription)
+      : new SafeSubscriber(observerOrNext, subscription);
 
     subscription.add(this.wrappedFunction(subscriber));
 
@@ -15,6 +17,6 @@ export class Observable<T> {
   }
 
   pipe(...operators: any): Observable<any> {
-    return operators.reduce((source: T, next: (source: T) => {}) => next(source), this);
+    return operators.reduce((source: T, next: (source: T) => void) => next(source), this);
   }
 }

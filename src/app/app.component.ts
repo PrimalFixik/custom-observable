@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from './shared/models/observable/observable';
 import { Observer } from './shared/models/observable/observer';
-import {Subscription} from "./shared/models/observable/subscription";
-import {User} from "./shared/models/user";
-import {MockService} from "./shared/services/mock.service";
+import { Subscription } from "./shared/models/observable/subscription";
+import { User } from "./shared/models/user";
+import { MockService } from "./shared/services/mock.service";
 
 @Component({
   selector: 'app-root',
@@ -32,7 +32,7 @@ export class AppComponent implements OnInit {
       return () => {
         if (!this.isSenderWorking) {
           clearInterval(timer);
-          subscriber.complete();
+          subscriber.complete?.();
         }
       };
     });
@@ -51,7 +51,7 @@ export class AppComponent implements OnInit {
     });
 
     this.users$ = this.mockService.getMockUsers();
-    this.userSubscription = this.users$.subscribe()
+    this.userSubscription = this.users$.subscribe((value) => console.log(value));
   }
 
 }

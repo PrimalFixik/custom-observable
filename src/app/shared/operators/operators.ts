@@ -6,7 +6,7 @@ export function of<T>(...args: any): Observable<T> {
     for (let i = 0; i < length; i++) {
       observer.next(args[i]);
     }
-    observer.complete();
+    observer.complete?.();
   });
 }
 
@@ -15,8 +15,8 @@ export function map<T>(projection: (value: T) => any): Observable<any> {
     next: (value: T) => {
       observer.next(projection(value))
     },
-    complete: () => observer.complete(),
-    error: (e: any) => observer.error(e)
+    complete: () => observer.complete?.(),
+    error: (e: any) => observer.error?.(e)
   }));
 }
 
@@ -27,7 +27,7 @@ export function filter<T>(condition: (value: T) => boolean): Observable<any> {
         observer.next(value);
       }
     },
-    complete: () => observer.complete(),
-    error: (e: any) => observer.error(e)
+    complete: () => observer.complete?.(),
+    error: (e: any) => observer.error?.(e)
   }));
 }
