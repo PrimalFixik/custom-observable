@@ -26,11 +26,7 @@ export class MockService {
       }
     ] as Array<User>)
       .pipe(
-        map((user: User) => {
-          const a = 3
-          debugger
-          return `${user.name} ${user.surname}`
-        })
+        map((user: User) => `${user.name} ${user.surname}`)
       )
   }
 }
