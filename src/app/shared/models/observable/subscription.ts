@@ -1,11 +1,11 @@
 export class Subscription {
-  private teardowns = new Set<() => void>();
+  private teardowns: Set<() => void> = new Set<() => void>();
 
-  add(teardown: () => void) {
+  add(teardown: () => void): void {
     this.teardowns.add(teardown);
   }
 
-  unsubscribe() {
+  unsubscribe(): void {
     for (const teardown of this.teardowns) {
       teardown();
     }

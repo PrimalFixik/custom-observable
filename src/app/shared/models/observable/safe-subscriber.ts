@@ -2,22 +2,20 @@ import { Observer } from "./observer";
 import { Subscription } from "./subscription";
 
 export class SafeSubscriber<T> {
-  closed = false;
+  closed: boolean = false;
 
   constructor(
     private observer: Observer<T>,
     private subscription: Subscription
-  ) {
-    subscription.add(() => (this.closed = true));
-  }
+  ) {}
 
-  next(value: T) {
+  next(value: T): void {
     if (!this.closed) {
       this.observer.next?.(value);
     }
   }
 
-  complete() {
+  complete(): void {
     if (!this.closed) {
       this.closed = true;
       this.observer.complete?.();
@@ -25,7 +23,7 @@ export class SafeSubscriber<T> {
     }
   }
 
-  error(err: any) {
+  error(err: any): void {
     if (!this.closed) {
       this.closed = true;
       this.observer.error?.(err);

@@ -5,9 +5,9 @@ import { Subscription } from "./subscription";
 export class Observable<T> {
   constructor(private wrappedFunction: (subscriber: Observer<T>) => () => void) {}
 
-  subscribe(observerOrNext: Observer<T> | ((value: T) => void)) {
-    const subscription = new Subscription();
-    const subscriber = typeof observerOrNext === 'function'
+  subscribe(observerOrNext: Observer<T> | ((value: T) => void)): Subscription {
+    const subscription: Subscription = new Subscription();
+    const subscriber: SafeSubscriber<T> = typeof observerOrNext === 'function'
       ? new SafeSubscriber({ next: observerOrNext }, subscription)
       : new SafeSubscriber(observerOrNext, subscription);
 

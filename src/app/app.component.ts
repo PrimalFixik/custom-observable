@@ -18,7 +18,7 @@ export class AppComponent implements OnInit {
   myObservable: Observable<string>;
   isSenderWorking = true;
 
-  users$: Observable<Array<User>>;
+  users$: Observable<any>;
   userSubscription: Subscription;
 
   constructor(private mockService: MockService) {
@@ -44,13 +44,9 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.subscription = this.myObservable.subscribe({
-      next: console.log,
-      complete: () => console.log('Completed!'),
-      error: console.error,
-    });
-
     this.users$ = this.mockService.getMockUsers();
+    console.debug(this.users$)
+    debugger
     this.userSubscription = this.users$.subscribe((value) => console.log(value));
   }
 
