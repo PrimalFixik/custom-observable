@@ -17,6 +17,9 @@ export class Observable<T> {
   }
 
   pipe(...operators: any): Observable<any> {
-    return operators.reduce((source: T, next: (source: T) => void) => next(source), this);
+    return operators.reduce((source: T, next: (source: T) => void) => {
+      debugger
+      return next(source);
+    }, this);
   }
 }
