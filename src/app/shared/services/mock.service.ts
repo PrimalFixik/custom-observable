@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {Observable} from "../models/observable/observable";
+import {MyObservable} from "../models/observable/myObservable";
 import {User} from "../models/user";
 import {map, of} from "../operators/operators";
 
@@ -12,7 +12,7 @@ export class MockService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getMockUsers(): Observable<Array<User>> {
+  getMockUsers(): MyObservable<Array<User>> {
     return of([
       {
         name: 'Serjio',
@@ -25,8 +25,5 @@ export class MockService {
         age: 40
       }
     ] as Array<User>)
-      .pipe(
-        map((user: User) => `${user.name} ${user.surname}`)
-      )
   }
 }
